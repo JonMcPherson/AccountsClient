@@ -6,17 +6,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import com.mojang.api.profiles.minecraft.HttpProfileRepository;
+import com.mojang.api.profiles.minecraft.MinecraftProfileRepository;
+
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.CoreMatchers.*;
 
 @RunWith(JUnit4.class)
 public class HttpProfileRepositoryIntegrationTests {
 
     @Test
     public void findProfilesByNames_existingNameProvided_returnsProfile() throws Exception {
-        ProfileRepository repository = new HttpProfileRepository("minecraft");
+        ProfileRepository repository = new HttpProfileRepository();
 
         Profile[] profiles = repository.findProfilesByNames("mollstam");
 
@@ -27,7 +28,7 @@ public class HttpProfileRepositoryIntegrationTests {
 
     @Test
     public void findProfilesByNames_existingMultipleNamesProvided_returnsProfiles() throws Exception {
-        ProfileRepository repository = new HttpProfileRepository("minecraft");
+        ProfileRepository repository = new HttpProfileRepository();
 
         Profile[] profiles = repository.findProfilesByNames("mollstam", "KrisJelbring");
 
@@ -40,7 +41,7 @@ public class HttpProfileRepositoryIntegrationTests {
 
     @Test
     public void findProfilesByNames_nonExistingNameProvided_returnsEmptyArray() throws Exception {
-        ProfileRepository repository = new HttpProfileRepository("minecraft");
+        ProfileRepository repository = new HttpProfileRepository();
 
         Profile[] profiles = repository.findProfilesByNames("doesnotexist$*not even legal");
 
@@ -49,7 +50,7 @@ public class HttpProfileRepositoryIntegrationTests {
 
     @Test
     public void findProfileById_existingNameProvided_returnsProfile() throws Exception {
-        ProfileRepository repository = new HttpProfileRepository("minecraft");
+        MinecraftProfileRepository repository = new HttpProfileRepository();
 
         UUID playerId = UUID.fromString("c35a67c9-b797-469f-a893-cf81b4104898");
         Profile profile = repository.findProfileById(playerId);
@@ -58,5 +59,5 @@ public class HttpProfileRepositoryIntegrationTests {
         assertThat(profile.getName(), is(equalTo("Weasel_Squeezer")));
         assertThat(profile.getId(), is(equalTo(playerId)));
     }
-    
+
 }

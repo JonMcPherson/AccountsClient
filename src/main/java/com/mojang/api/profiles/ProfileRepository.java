@@ -1,11 +1,9 @@
 package com.mojang.api.profiles;
 
-import java.util.UUID;
+import java.io.IOException;
 
 public interface ProfileRepository {
 
-    public Profile[] findProfilesByNames(String... names);
-
-    public Profile findProfileById(UUID uuid);
+    public Profile[] findProfilesByNames(String... names) throws IOException;
 
 }
